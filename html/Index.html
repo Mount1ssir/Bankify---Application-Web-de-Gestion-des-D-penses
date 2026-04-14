@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bankify - Login / Signup</title>
+  </head>
+  <body>
+    <section id="auth-view" class="view-container auth-wrapper">
+      <div class="auth-card" id="login-form-container">
+        <div class="auth-logo">Bankify</div>
+        <p class="auth-tagline">
+          Start Tracking Smarter. Take control of your money.
+        </p>
+        <h2 class="auth-title">Welcome back to BANKIFY</h2>
+        <form id="login-form">
+          <div class="form-group" style="text-align: left">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="login-email"
+              class="form-control"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label>Password</label>
+            <input
+              type="password"
+              id="login-password"
+              class="form-control"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn-primary">LOGIN</button>
+        </form>
+        <div style="margin-top: 24px">
+          <a href="#" class="font-semibold" id="show-signup"
+            >Don't have an account? Create one</a
+          >
+        </div>
+      </div>
+
+      <div class="auth-card hidden" id="signup-form-container">
+        <div class="auth-logo">Bankify</div>
+        <h2 class="auth-title">Create your account</h2>
+        <form id="signup-form">
+          <div class="form-group" style="text-align: left">
+            <label>Name</label>
+            <input
+              type="text"
+              id="signup-name"
+              class="form-control"
+              placeholder="e.g. Mustapha Mountassir"
+              required
+            />
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="signup-email"
+              class="form-control"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label>Password</label>
+            <input
+              type="password"
+              id="signup-password"
+              class="form-control"
+              placeholder="Create a password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn-primary">CREATE ACCOUNT</button>
+        </form>
+        <div style="margin-top: 24px">
+          <a href="#" class="font-semibold" id="show-login"
+            >Already have an account? Login</a
+          >
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

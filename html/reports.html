@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bankify - Reports</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <section class="view-container app-layout">
+      <aside class="sidebar">
+        <div class="sidebar-logo">Bankify</div>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-item">Dashboard</a>
+          <a href="reports.html" class="nav-item active">Reports</a>
+          <a href="add-transaction.html" class="nav-item">Add Transaction</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <a href="index.html" class="nav-item text-red">Log out</a>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="page-header">
+          <h1 class="page-title">Monthly Statistics</h1>
+        </header>
+        <div class="charts-grid">
+          <div class="chart-card"><canvas id="donutChart"></canvas></div>
+          <div class="chart-card"><canvas id="lineChart"></canvas></div>
+        </div>
+        <div id="category-breakdown-grid" class="category-grid"></div>
+      </main>
+    </section>
+  </body>
+</html>

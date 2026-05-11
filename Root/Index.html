@@ -1,90 +1,136 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Bankify - Login / Signup</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <section id="auth-view" class="view-container auth-wrapper">
-      <div class="auth-card" id="login-form-container">
-        <div class="auth-logo">Bankify</div>
-        <p class="auth-tagline">
-          Start Tracking Smarter. Take control of your money.
-        </p>
-        <h2 class="auth-title">Welcome back to BANKIFY</h2>
-        <form id="login-form">
-          <div class="form-group" style="text-align: left">
-            <label>Email Address</label>
-            <input
-              type="email"
-              id="login-email"
-              class="form-control"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-          <div class="form-group" style="text-align: left">
-            <label>Password</label>
-            <input
-              type="password"
-              id="login-password"
-              class="form-control"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn-primary">LOGIN</button>
-        </form>
-        <div style="margin-top: 24px">
-          <a href="#" class="font-semibold" id="show-signup"
-            >Don't have an account? Create one</a
-          >
-        </div>
-      </div>
 
-      <div class="auth-card hidden" id="signup-form-container">
-        <div class="auth-logo">Bankify</div>
-        <h2 class="auth-title">Create your account</h2>
-        <form id="signup-form">
-          <div class="form-group" style="text-align: left">
-            <label>Name</label>
-            <input
-              type="text"
-              id="signup-name"
-              class="form-control"
-              placeholder="e.g. Mustapha Mountassir"
-              required
-            />
-          </div>
-          <div class="form-group" style="text-align: left">
-            <label>Email Address</label>
-            <input
-              type="email"
-              id="signup-email"
-              class="form-control"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-          <div class="form-group" style="text-align: left">
-            <label>Password</label>
-            <input
-              type="password"
-              id="signup-password"
-              class="form-control"
-              placeholder="Create a password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn-primary">CREATE ACCOUNT</button>
-        </form>
-        <div style="margin-top: 24px">
-          <a href="#" class="font-semibold" id="show-login"
-            >Already have an account? Login</a
-          >
+<head>
+  <meta charset="UTF-8" />
+  <title>Bankify - Login / Signup</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <section id="auth-view" class="view-container auth-wrapper">
+    <div class="auth-card" id="login-form-container">
+      <div class="auth-logo">Bankify</div>
+      <p class="auth-tagline">
+        Start Tracking Smarter. Take control of your money.
+      </p>
+      <h2 class="auth-title">Welcome back to BANKIFY</h2>
+      <form id="login-form">
+        <div class="form-group" style="text-align: left">
+          <label>Email Address</label>
+          <input type="email" id="login-email" class="form-control" placeholder="Enter your email" required />
         </div>
+        <div class="form-group" style="text-align: left">
+          <label>Password</label>
+          <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required />
+        </div>
+        <button type="submit" class="btn-primary">LOGIN</button>
+      </form>
+      <div style="margin-top: 24px">
+        <a href="#" class="font-semibold" id="show-signup">Don't have an account? Create one</a>
       </div>
-    </section>
-  </body>
+    </div>
+
+    <div class="auth-card hidden" id="signup-form-container">
+      <div class="auth-logo">Bankify</div>
+      <h2 class="auth-title">Create your account</h2>
+      <form id="signup-form">
+        <div class="form-group" style="text-align: left">
+          <label>Name</label>
+          <input type="text" id="signup-name" class="form-control" placeholder="e.g. Mustapha Mountassir" required />
+        </div>
+        <div class="form-group" style="text-align: left">
+          <label>Email Address</label>
+          <input type="email" id="signup-email" class="form-control" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group" style="text-align: left">
+          <label>Password</label>
+          <input type="password" id="signup-password" class="form-control" placeholder="Create a password" required />
+        </div>
+        <button type="submit" class="btn-primary">CREATE ACCOUNT</button>
+      </form>
+      <div style="margin-top: 24px">
+        <a href="#" class="font-semibold" id="show-login">Already have an account? Login</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginContainer = document.getElementById("login-form-container");
+      const signupContainer = document.getElementById("signup-form-container");
+      const btnShowSignup = document.getElementById("show-signup");
+      const btnShowLogin = document.getElementById("show-login");
+      const loginForm = document.getElementById("login-form");
+      const signupForm = document.getElementById("signup-form");
+
+      if (btnShowSignup && btnShowLogin && loginContainer && signupContainer) {
+        btnShowSignup.addEventListener("click", (e) => {
+          e.preventDefault();
+          loginContainer.classList.add("hidden");
+          signupContainer.classList.remove("hidden");
+        });
+
+        btnShowLogin.addEventListener("click", (e) => {
+          e.preventDefault();
+          signupContainer.classList.add("hidden");
+          loginContainer.classList.remove("hidden");
+        });
+      }
+
+      // API Connection
+      const API_URL = "http://localhost:5000/api/auth";
+
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const username = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        try {
+          const res = await fetch(`${API_URL}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            localStorage.setItem('bankify_token', data.token);
+            localStorage.setItem('bankify_user', data.username);
+            window.location.href = "dashboard.html";
+          } else {
+            alert(data.error || 'Login failed');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Server error');
+        }
+      });
+
+      signupForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const username = document.getElementById("signup-email").value;
+        const password = document.getElementById("signup-password").value;
+
+        try {
+          const res = await fetch(`${API_URL}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            localStorage.setItem('bankify_token', data.token);
+            localStorage.setItem('bankify_user', data.username);
+            window.location.href = "dashboard.html";
+          } else {
+            alert(data.error || 'Signup failed');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Server error');
+        }
+      });
+    });
+  </script>
+</body>
 </html>

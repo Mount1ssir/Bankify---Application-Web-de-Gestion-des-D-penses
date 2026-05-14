@@ -11,12 +11,14 @@ router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password are required' });
+      res.status(400);
+      return res.json({ error: 'Username and password are required' });
     }
 
     let user = await User.findOne({ username });
     if (user) {
-      return res.status(400).json({ error: 'Username already exists' });
+      res.status(400);
+      return res.json({ error: 'Username already exists' });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -30,10 +32,12 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
-    res.status(201).json({ token, username: user.username });
+    res.status(201);
+    res.json({ token, username: user.username });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server Error' });
+    console.error('Register error:', err);
+    res.status(500);
+    res.json({ error: 'Server Error' });
   }
 });
 
@@ -42,24 +46,28 @@ router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password are required' });
+      res.status(400);
+      return res.json({ error: 'Username and password are required' });
     }
 
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      res.status(400);
+      return res.json({ error: 'Invalid credentials' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      res.status(400);
+      return res.json({ error: 'Invalid credentials' });
     }
 
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
     res.json({ token, username: user.username });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server Error' });
+    console.error('Login error:', err);
+    res.status(500);
+    res.json({ error: 'Server Error' });
   }
 });
 

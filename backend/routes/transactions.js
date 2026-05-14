@@ -9,14 +9,18 @@ const JWT_SECRET = process.env.JWT_SECRET || 'bankify_super_secret_key';
 // Middleware to protect routes
 const auth = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
-  if (!token) return res.status(401).json({ error: 'No token, authorization denied' });
+  if (!token) {
+    res.status(401);
+    return res.json({ error: 'No token, authorization denied' });
+  }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.userId = decoded.userId;
     next();
   } catch (err) {
-    res.status(401).json({ error: 'Token is not valid' });
+    res.status(401);
+    res.json({ error: 'Token is not valid' });
   }
 };
 
@@ -26,7 +30,9 @@ router.get('/', auth, async (req, res) => {
     const transactions = await Transaction.find({ userId: req.userId }).sort({ date: -1 });
     res.json(transactions);
   } catch (err) {
-    res.status(500).json({ error: 'Server Error' });
+    console.error('Get transactions error:', err);
+    res.status(500);
+    res.json({ error: 'Server Error' });
   }
 });
 
@@ -42,9 +48,12 @@ router.post('/', auth, async (req, res) => {
       date
     });
     const savedTx = await newTx.save();
-    res.status(201).json(savedTx);
+    res.status(201);
+    res.json(savedTx);
   } catch (err) {
-    res.status(500).json({ error: 'Server Error' });
+    console.error('Add transaction error:', err);
+    res.status(500);
+    res.json({ error: 'Server Error' });
   }
 });
 
@@ -57,7 +66,9 @@ router.get('/categories', auth, async (req, res) => {
       Expense: user.expenseCategories
     });
   } catch (err) {
-    res.status(500).json({ error: 'Server Error' });
+    console.error('Get categories error:', err);
+    res.status(500);
+    res.json({ error: 'Server Error' });
   }
 });
 
@@ -77,7 +88,9 @@ router.post('/categories', auth, async (req, res) => {
     await user.save();
     res.json({ success: true, categories: user[key] });
   } catch (err) {
-    res.status(500).json({ error: 'Server Error' });
+    console.error('Update categories error:', err);
+    res.status(500);
+    res.json({ error: 'Server Error' });
   }
 });
 

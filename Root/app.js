@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   // --- 1. DATA MANAGEMENT (API) ---
-  const API_URL = "http://localhost:5000/api";
+  const API_URL = "http://localhost:3000/api";
   
   const getToken = () => localStorage.getItem('bankify_token');
 
